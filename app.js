@@ -10,7 +10,7 @@ yargs.version('1.1.0');
 // Create add command
 yargs.command({
   command: 'add',
-  describe: 'Add a new note',
+  describe: 'Add a new note (node app.js remove --title="title" --body="My awesome note body.")',
   builder: {
     title: {
       describe: 'Note title',
@@ -38,7 +38,7 @@ yargs.command({
       type: 'string'
     }
   },
-  describe: 'Remove a note',
+  describe: 'Remove a note (node app.js remove --title="title")',
   handler: function(argv){
     notes.removeNote(argv.title);
   }

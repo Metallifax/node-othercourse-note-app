@@ -1,54 +1,67 @@
+// Module variables
 const fs = require('fs');
+const chalk = require('chalk');
 
 const getNotes = () => console.log('Your notes...');
 
 const addNote = (title, body) => {
-  const notes = loadNotes();
+  const notes = loadNotes(); // Load notes into variable
+  // Construct a new array so we can check if a duplicate has been found 
+  // using the filter method
   const duplicateNotes = notes.filter(note => note.title === title);
 
+  // Check if duplicate is found if array has an element inside
   if (duplicateNotes.length === 0) {
     notes.push({
       title: title,
       body: body,
     });
     
-    saveNotes(notes);
-    console.log('\nNew note added!\n');
-  } else {
-    console.log('\nNote title duplicate found... Please try again.\n');
+    saveNotes(notes); // Save to file --> log it to console.
+    console.log(success('\nNew note added!\n'));
+
+  } else {// Log if failed the duplicate check.
+    console.log(fail('\nNote title duplicate found... Please try again.\n'));
   }
   
 };
 
 const removeNote = (title) => {
-  const notes = loadNotes();
+  const notes = loadNotes(); // Load notes into variable
   const newNotes = notes.filter(note => note.title !== title);
-  if (newNotes < notes){
-    try {
+  // Similar to the add filter, except we're duplicating an array
+  // with the elements left over after the remove.
+
+  
+  if (newNotes < notes){ // Check if array has changed
+    try { // Save new array --> log it to console
       saveNotes(newNotes);
-      console.log('\nRemoved: ' + title + '\n');
-      console.log(newNotes , '\n');
-    } catch(e) {
+      console.log(success(`\nRemoved: ${title}!\n`));
+    } catch(e) { // Catch any error that may occur (who knows.)
       console.log('\nSomething went wrong... Could not remove note: ' + e);
     }
   } else {
-    console.log('"'+ title + '" - Is not in notes database.');
+    console.log(fail('\n"', title, '" - is not inside the database...\n'));
   }
 };
 
-const saveNotes = (notes) => {
+const saveNotes = (notes) => { // Save to database after stringifying the object array
   const dataJSON = JSON.stringify(notes);
   fs.writeFileSync('notes.json', dataJSON);
 };
 
 const loadNotes = () => {
-  try {
+  try { // Load buffer object from notes.json and stringify --> return JavaScript object
     const dataBuffer = fs.readFileSync('notes.json').toString();
     return JSON.parse(dataBuffer);
   } catch(e) {
-    return [];
+    return []; // Default object to show the user if the object list is empty
   }
 };
+
+// Colorful logs 
+const fail = (...strings) => chalk.red.inverse(strings.join(''));
+const success = (...strings) => chalk.green.inverse(strings.join('')); 
 
 module.exports = {
   getNotes: getNotes,
