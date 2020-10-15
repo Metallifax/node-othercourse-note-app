@@ -1,17 +1,9 @@
-// const utils = require('./utils');
-
-// console.log(
-//   utils.name,
-//   utils.age,
-//   utils.add(1, 3)
-// );
-
-// Challenge: Define and use a function in a new file
-//
-// 1. Create a new file called notes.js
-// 2. Create getNotes function that returns "Your notes..."
-// 3. Export getNotes function
-// 4. From app.js, load in and call the function printing message to console
+const validator = require('validator');
 const read = require('./notes');
+const chalk = require('chalk');
 
-console.log(read());
+// console.log(validator.isURL('google.com'));
+getNotes = () => console.log(`Your notes...\n${read()}`);
+getSuccess = () => console.log(chalk.red('Su') + chalk.green('cce') + chalk.blue('ss!'));
+
+getSuccess();
