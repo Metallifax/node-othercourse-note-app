@@ -2,8 +2,10 @@
 const fs = require('fs');
 const chalk = require('chalk');
 
+// Get Notes Method
 const getNotes = () => console.log('Your notes...');
 
+// Add Note Method
 const addNote = (title, body) => {
   const notes = loadNotes(); // Load notes into variable
   // Construct a new array so we can check if a duplicate has been found 
@@ -26,6 +28,7 @@ const addNote = (title, body) => {
   
 };
 
+// Remove Note Method
 const removeNote = (title) => {
   const notes = loadNotes(); // Load notes into variable
   const newNotes = notes.filter(note => note.title !== title);
@@ -45,6 +48,7 @@ const removeNote = (title) => {
   }
 };
 
+// Utility Functions
 const saveNotes = (notes) => { // Save to database after stringifying the object array
   const dataJSON = JSON.stringify(notes);
   fs.writeFileSync('notes.json', dataJSON);
