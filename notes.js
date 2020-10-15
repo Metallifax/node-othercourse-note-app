@@ -1,12 +1,33 @@
 const fs = require('fs');
 
-const getNotes = () => 
-  fs.readFileSync('./notes.txt', 'utf-8', (err, data) => {
-    try {
-      return data;
-    } catch (err) {
-      console.log(err);
-    }
-  });
+const getNotes = () => 'Your notes...';
 
-module.exports = getNotes;
+const addNote = (title, body) => {
+  const notes = loadNotes();
+
+  notes.push({
+    title: title,
+    body: body,
+  });
+  
+  saveNotes(notes);
+};
+
+const saveNotes = (notes) => {
+  const dataJSON = JSON.stringify(notes);
+  fs.writeFileSync('notes.json', dataJSON);
+};
+
+const loadNotes = () => {
+  try {
+    const dataBuffer = fs.readFileSync('notes.json').toString();
+    return JSON.parse(dataBuffer);
+  } catch(e) {
+    return [];
+  }
+};
+
+module.exports = {
+  getNotes: getNotes,
+  addNote: addNote,
+};
