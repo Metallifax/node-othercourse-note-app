@@ -13,6 +13,7 @@
   "dependencies": {
     "chalk": "^4.1.0",
     "nodemon": "^2.0.5",
-    "validator": "^13.1.17"
+    "validator": "^13.1.17",
+    "yargs": "^16.0.3"
   }
 }
