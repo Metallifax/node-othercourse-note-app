@@ -1,8 +1,6 @@
 // npm modules
-const chalk = require('chalk');
 const yargs = require('yargs');
-// User defined modules
-const read = require('./notes');
+
 
 // Customize yargs version
 yargs.version('1.1.0');

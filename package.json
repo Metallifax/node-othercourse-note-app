@@ -15,5 +15,8 @@
     "nodemon": "^2.0.5",
     "validator": "^13.1.17",
     "yargs": "^16.0.3"
+  },
+  "devDependencies": {
+    "eslint": "^7.11.0"
   }
 }
