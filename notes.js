@@ -1,16 +1,39 @@
 const fs = require('fs');
 
-const getNotes = () => 'Your notes...';
+const getNotes = () => console.log('Your notes...');
 
 const addNote = (title, body) => {
   const notes = loadNotes();
+  const duplicateNotes = notes.filter(note => note.title === title);
 
-  notes.push({
-    title: title,
-    body: body,
-  });
+  if (duplicateNotes.length === 0) {
+    notes.push({
+      title: title,
+      body: body,
+    });
+    
+    saveNotes(notes);
+    console.log('\nNew note added!\n');
+  } else {
+    console.log('\nNote title duplicate found... Please try again.\n');
+  }
   
-  saveNotes(notes);
+};
+
+const removeNote = (title) => {
+  const notes = loadNotes();
+  const newNotes = notes.filter(note => note.title !== title);
+  if (newNotes < notes){
+    try {
+      saveNotes(newNotes);
+      console.log('\nRemoved: ' + title + '\n');
+      console.log(newNotes , '\n');
+    } catch(e) {
+      console.log('\nSomething went wrong... Could not remove note: ' + e);
+    }
+  } else {
+    console.log('"'+ title + '" - Is not in notes database.');
+  }
 };
 
 const saveNotes = (notes) => {
@@ -30,4 +53,5 @@ const loadNotes = () => {
 module.exports = {
   getNotes: getNotes,
   addNote: addNote,
+  removeNote: removeNote,
 };
