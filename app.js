@@ -1,8 +1,11 @@
-const validator = require('validator');
-const read = require('./notes');
+// npm modules
 const chalk = require('chalk');
 
-getNotes = () => console.log(`Your notes...\n${read()}`);
-getSuccess = () => console.log(chalk.red('Su') + chalk.green('cce') + chalk.blue('ss!'));
+// User defined modules
+const read = require('./notes');
 
-getSuccess();
+const command = process.argv[2];
+
+if (command === 'add') console.log('Adding note!');
+else if (command === 'remove') console.log('Removing!');
+else console.log('Did not compute...');
