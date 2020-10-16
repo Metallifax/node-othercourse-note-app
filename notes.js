@@ -2,18 +2,41 @@
 const fs = require('fs');
 const chalk = require('chalk');
 
-// Get Notes Method
-const getNotes = () => console.log('Your notes...');
+// List Notes Method
+const listNotes = () => {
+  const notes = loadNotes();
+  notes.length > 0 ? 
+    console.log(
+      'Here\'s a list of all your notes:\n\n', 
+      ...notes.map(note => note.title + '\n'))
+    : console.log('\nNo saved notes!\n');
+};
+
+// Get Note Method
+const getNote = (title) => {
+  const notes = loadNotes();
+  const duplicateNote = notes.find(note => note.title === title) ;
+  if (duplicateNote) {
+    console.log(success('\nHere\'s your note!\n'));
+    console.log(duplicateNote['body'], '\n\n~End note.\n');
+  } else {
+    console.log(fail('Note has not been found in database... Type "list" to view notes or --help for options.'));
+  }
+};
 
 // Add Note Method
 const addNote = (title, body) => {
   const notes = loadNotes(); // Load notes into variable
   // Construct a new array so we can check if a duplicate has been found 
   // using the filter method
-  const duplicateNotes = notes.filter(note => note.title === title);
+  // const duplicateNotes = notes.filter(note => note.title === title);
+  const duplicateNote = notes.find(note => note.title === title); 
 
   // Check if duplicate is found if array has an element inside
-  if (duplicateNotes.length === 0) {
+  if (duplicateNote) {
+    console.log(fail('\nNote title duplicate found... Please try again.\n'));
+
+  } else {// Log if failed the duplicate check.
     notes.push({
       title: title,
       body: body,
@@ -21,9 +44,6 @@ const addNote = (title, body) => {
     
     saveNotes(notes); // Save to file --> log it to console.
     console.log(success('\nNew note added!\n'));
-
-  } else {// Log if failed the duplicate check.
-    console.log(fail('\nNote title duplicate found... Please try again.\n'));
   }
   
 };
@@ -68,7 +88,8 @@ const fail = (...strings) => chalk.red.inverse(strings.join(''));
 const success = (...strings) => chalk.green.inverse(strings.join('')); 
 
 module.exports = {
-  getNotes: getNotes,
   addNote: addNote,
   removeNote: removeNote,
+  listNotes: listNotes,
+  getNote: getNote
 };
