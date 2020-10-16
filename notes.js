@@ -29,7 +29,6 @@ const addNote = (title, body) => {
   const notes = loadNotes(); // Load notes into variable
   // Construct a new array so we can check if a duplicate has been found 
   // using the filter method
-  // const duplicateNotes = notes.filter(note => note.title === title);
   const duplicateNote = notes.find(note => note.title === title); 
 
   // Check if duplicate is found if array has an element inside
