@@ -2,6 +2,7 @@
 const fs = require('fs');
 const chalk = require('chalk');
 
+
 // List Notes Method
 const listNotes = () => {
   const notes = loadNotes();
@@ -44,7 +45,6 @@ const addNote = (title, body) => {
     saveNotes(notes); // Save to file --> log it to console.
     console.log(success('\nNew note added!\n'));
   }
-  
 };
 
 // Remove Note Method
@@ -54,7 +54,6 @@ const removeNote = (title) => {
   // Similar to the add filter, except we're duplicating an array
   // with the elements left over after the remove.
 
-  
   if (newNotes < notes){ // Check if array has changed
     try { // Save new array --> log it to console
       saveNotes(newNotes);
